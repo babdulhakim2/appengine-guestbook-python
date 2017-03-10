@@ -53,7 +53,7 @@
       {% for greeting in greetings %}
       <div class="row">
         {% if greeting.author %}
-          <b>{{ greeting.author.email }}
+          <b>{{ greeting.author.email }} 
             {% if user and user.user_id() == greeting.author.identity %}
               (You)
             {% endif %}

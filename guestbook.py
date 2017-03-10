@@ -30,7 +30,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 # [END imports]
 
-DEFAULT_GUESTBOOK_NAME = 'default_guestbook'
+DEFAULT_GUESTBOOK_NAME = 'abdul_guestbook'
 
 
 # We set a parent key on the 'Greetings' to ensure that they are all
@@ -57,7 +57,8 @@ class Greeting(ndb.Model):
     """A main model for representing an individual Guestbook entry."""
     author = ndb.StructuredProperty(Author)
     content = ndb.StringProperty(indexed=False)
-    date = ndb.DateTimeProperty(auto_now_add=True)
+    date = ndb.DateTimeProperty(auto_now_add=True, auto_now=False)
+    updated = ndb.DateTimeProperty(auto_now_add=False, auto_now=True)
 # [END greeting]
 
 
@@ -69,7 +70,7 @@ class MainPage(webapp2.RequestHandler):
                                           DEFAULT_GUESTBOOK_NAME)
         greetings_query = Greeting.query(
             ancestor=guestbook_key(guestbook_name)).order(-Greeting.date)
-        greetings = greetings_query.fetch(10)
+        greetings = greetings_query.fetch(20)
 
         user = users.get_current_user()
         if user:
